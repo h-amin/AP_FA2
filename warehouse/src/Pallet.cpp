@@ -1,4 +1,4 @@
-#include "src/include/Pallet.hpp"
+#include "include/Pallet.hpp"
 
 // Constructor
 Pallet::Pallet(const std::string& itemName, int itemCapacity, int itemCount)

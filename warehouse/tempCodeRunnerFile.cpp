@@ -5,21 +5,6 @@
 #include "src/include/Employee.hpp"
 
 
-///////////////////////////////////////////////////////////////
-//                                                           //
-//                       Main file                           //
-//                                                           //
-///////////////////////////////////////////////////////////////
-//                                                           //
-// This file contains an initialization for the compiling    //
-// and linking of .cpp files. The result is a executable     //
-// named my_program to see if the code works.                //
-// There is also a second executable for the testWarehouse.  //
-// Running this executable will show us if the test cases    //
-// are succesfull or not.                                    //
-//                                                           //
-///////////////////////////////////////////////////////////////
-
 int main() {
   // Create warehouse
   Warehouse warehouse;

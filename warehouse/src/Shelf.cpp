@@ -1,4 +1,4 @@
-#include "src/include/Shelf.hpp"
+#include "include/Shelf.hpp"
 
 // Constructor
 Shelf::Shelf() {}

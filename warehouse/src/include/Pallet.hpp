@@ -24,8 +24,8 @@ public:
   bool putOne();
 
   // IContainer methods
-  bool isEmpty() const override;
-  bool isFull() const override;
+  bool isEmpty() const;
+  bool isFull() const;
 };
 
 #endif // PALLET_HPP

@@ -1,4 +1,4 @@
-#include "src/include/Warehouse.hpp"
+#include "include/Warehouse.hpp"
 #include <algorithm>
 
 // Default constructor
@@ -55,5 +55,5 @@ bool Warehouse::pickItems(const std::string& itemName, int itemCount) {
     }
   }
 
-  return count == itemCount;
+  return count >= itemCount;
 }
