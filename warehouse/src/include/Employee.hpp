@@ -2,17 +2,20 @@
 #define EMPLOYEE_H
 
 #include <string>
+#include <vector>
+
+using namespace std;
 
 class Employee {
 private:
-    const std::string name;
+    const string name;
     bool busy;
     bool forkliftCertificate;
 
 public:
-    Employee(std::string name, bool forkliftCertificate);
+    Employee(const string& name, bool forkliftCertificate);
 
-    std::string getName() const;
+    string getName() const;
     bool getBusy() const;
     void setBusy(bool busy);
     bool getForkliftCertificate() const;

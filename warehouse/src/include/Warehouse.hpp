@@ -2,21 +2,24 @@
 #define WAREHOUSE_H
 
 #include <vector>
+#include <string>
 #include "Employee.hpp"
 #include "Shelf.hpp"
 
+using namespace std;
+
 class Warehouse {
 public:
-    std::vector<Employee> employees;
-    std::vector<Shelf> shelves;
+    vector<Employee> employees;
+    vector<Shelf> shelves;
 
 public:
     Warehouse();
 
-    void addEmployee(Employee employee);
-    void addShelf(Shelf shelf);
-    bool rearrangeShelf(Shelf& shelf, const Employee& employee);
-    bool pickItems(const std::string& itemName, int itemCount);
+    void addEmployee(const Employee& employee);
+    void addShelf(const Shelf& shelf);
+    bool rearrangeShelf(Shelf& shelf);
+    bool pickItems(const string& itemName, int itemCount);   
 };
 
 #endif // WAREHOUSE_H

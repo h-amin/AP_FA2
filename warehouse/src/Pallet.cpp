@@ -1,53 +1,61 @@
 #include "src/include/Pallet.hpp"
 
-Pallet::Pallet(std::string itemName,
-int itemCapacity, int itemCount)
-: itemName(std::move(itemName)), itemCapacity(itemCapacity), itemCount(itemCount) {}
+// Constructor
+Pallet::Pallet(const std::string& itemName, int itemCapacity, int itemCount)
+  : itemName(itemName), itemCapacity(itemCapacity), itemCount(itemCount) {}
 
-Pallet::Pallet()
-: itemName(""), itemCapacity(0), itemCount(0) {}
+// Default constructor
+Pallet::Pallet() : itemCount(0), itemName(""), itemCapacity(0) {}
 
+
+// Getter for itemName
 std::string Pallet::getItemName() const {
-return itemName;
+  return itemName;
 }
 
+// Getter for itemCount
 int Pallet::getItemCount() const {
-return itemCount;
+  return itemCount;
 }
 
+// Getter for itemCapacity
 int Pallet::getRemainingSpace() const {
-return itemCapacity - itemCount;
+  return itemCapacity - itemCount;
 }
 
-bool Pallet::reallocateEmptyPallet(std::string itemName, int itemCapacity) {
-if (isEmpty()) {
-this->itemName = std::move(itemName);
-this->itemCapacity = itemCapacity;
-return true;
-}
-return false;
+// Reallocate an empty pallet with a new item name and capacity.
+bool Pallet::reallocateEmptyPallet(const std::string& newItemName, int newItemCapacity) {
+  if (itemCount == 0) {
+    itemName = newItemName;
+    itemCapacity = newItemCapacity;
+    return true;
+  }
+  return false;
 }
 
+// Take one item from the pallet.
 bool Pallet::takeOne() {
-if (!isEmpty()) {
-itemCount--;
-return true;
-}
-return false;
+  if (itemCount > 0) {
+    itemCount--;
+    return true;
+  }
+  return false;
 }
 
+// Put one item on the pallet.
 bool Pallet::putOne() {
-if (!isFull()) {
-itemCount++;
-return true;
-}
-return false;
+  if (itemCount < itemCapacity) {
+    itemCount++;
+    return true;
+  }
+  return false;
 }
 
+// IContainer methods
 bool Pallet::isEmpty() const {
-return itemCount == 0;
+  return itemCount == 0;
 }
 
 bool Pallet::isFull() const {
-return itemCount == itemCapacity;
+  return itemCount == itemCapacity;
 }

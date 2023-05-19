@@ -1,56 +1,59 @@
 #include "src/include/Warehouse.hpp"
+#include <algorithm>
 
-Warehouse::Warehouse() {
-    // Warehouse constructor implementation
+// Default constructor
+Warehouse::Warehouse() {}
+
+// Add an employee to the warehouse
+void Warehouse::addEmployee(const Employee& employee) {
+  employees.push_back(employee);
 }
 
-void Warehouse::addEmployee(Employee employee) {
-    employees.push_back(employee);
+// Add a shelf to the warehouse
+void Warehouse::addShelf(const Shelf& shelf) {
+  shelves.push_back(shelf);
 }
 
-void Warehouse::addShelf(Shelf shelf) {
-    shelves.push_back(shelf);
-}
+// Rearrange a shelf
+bool Warehouse::rearrangeShelf(Shelf& shelf) {
+  // Check if there's an available employee with a forklift certificate
+  auto it = std::find_if(employees.begin(), employees.end(), [](const Employee& e) {
+    return !e.getBusy() && e.getForkliftCertificate();
+  });
 
-bool Warehouse::rearrangeShelf(Shelf& shelf, const Employee& employee) {
-    if (!employee.getForkliftCertificate()) {
-        return false;
-    }
-
-    if (shelf.isEmpty() || shelf.isFull()) {
-        return false;
-    }
-
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3 - i; ++j) {
-            if (shelf.swapPallet(j, j + 1)) {
-                // Pallets swapped successfully
-            } else {
-                // Failed to swap pallets
-            }
-        }
-    }
-
-    return true;
-}
-
-bool Warehouse::pickItems(const std::string& itemName, int itemCount) {
-    int remainingItems = itemCount;
-    for (auto& shelf : shelves) {
-        for (auto& pallet : shelf.pallets) {
-            if (pallet.getItemName() == itemName) {
-                while (remainingItems > 0 && !pallet.isEmpty()) {
-                    if (pallet.takeOne()) {
-                        remainingItems--;
-                    } else {
-                        break;
-                    }
-                }
-            }
-            if (remainingItems == 0) {
-                return true;
-            }
-        }
-    }
+  if (it == employees.end()) {
     return false;
+  }
+
+  it->setBusy(true);
+
+  // Rearrange the shelf
+  shelf.rearrangePallets();
+
+  it->setBusy(false);
+
+  return true;
+}
+
+// Pick items from the warehouse
+bool Warehouse::pickItems(const std::string& itemName, int itemCount) {
+  int count = 0;
+
+  // Search through all shelves for the item
+  for (auto& shelf : shelves) {
+    // And all pallets on each shelf
+    for (int i = 0; i < 4; i++) {
+      // Find the target item
+      auto& pallet = shelf.getPallet(i);
+      if (pallet.getItemName() == itemName) {
+        while (pallet.getItemCount() > 0 && count < itemCount) {
+          if (pallet.takeOne()) {
+            count++;
+          }
+        }
+      }
+    }
+  }
+
+  return count == itemCount;
 }

@@ -1,28 +1,31 @@
-#ifndef PALLET_H
-#define PALLET_H
+#ifndef PALLET_HPP
+#define PALLET_HPP
 
 #include <string>
+#include "IContainer.hpp"
 
-class Pallet {
+using namespace std;
+
+class Pallet : public IContainer {
 private:
-    int itemCount;
-    std::string itemName;
-    int itemCapacity;
+  int itemCount;
+  string itemName;
+  int itemCapacity;
 
 public:
-    Pallet(std::string itemName, int itemCapacity, int itemCount);
-    Pallet();
+  Pallet(const string& itemName, int itemCapacity, int itemCount);
+  Pallet();
 
-    std::string getItemName() const;
-    int getItemCount() const;
-    int getRemainingSpace() const;
+  string getItemName() const;
+  int getItemCount() const;
+  int getRemainingSpace() const;
+  bool reallocateEmptyPallet(const string& newItemName, int newItemCapacity);
+  bool takeOne();
+  bool putOne();
 
-    bool reallocateEmptyPallet(std::string itemName, int itemCapacity);
-    bool takeOne();
-    bool putOne();
-
-    bool isEmpty() const;
-    bool isFull() const;
+  // IContainer methods
+  bool isEmpty() const override;
+  bool isFull() const override;
 };
 
-#endif // PALLET_H
+#endif // PALLET_HPP
